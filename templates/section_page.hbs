@@ -1,12 +1,9 @@
-<section class="hero">
-  <div class="hero-inner">
-    {{search scoped=true submit=false instant=true class='search search-full'}}
+<nav class="sub-nav">
+  <div class="container">
+    {{breadcrumbs}} {{search submit=false}}
   </div>
-</section>
+</nav>
 <div class="container">
-  <nav class="sub-nav">
-    {{breadcrumbs}}
-  </nav>
   <div class="section-container">
     <section class="section-content">
       <header class="page-header">
@@ -23,10 +20,7 @@
       {{#if section.articles}}
         <ul class="article-list">
           {{#each section.articles}}
-            <li class="article-list-item {{#if promoted}} article-promoted{{/if}}">
-              {{#if promoted}}
-                <span data-title="{{t 'promoted'}}" class="icon-star"></span>
-              {{/if}}
+            <li class="article-list-item">
               <a href="{{url}}" class="article-list-link">{{title}}</a>
             </li>
           {{/each}}

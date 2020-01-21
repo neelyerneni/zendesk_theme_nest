@@ -1,9 +1,9 @@
-<footer class="footer-wrapper">
+<footer class="footer">
   <div class="subfooter">
-    <h1>Can't find what you're looking for?</h1>
-    <a href="{{page_path 'new_request'}}" class="submit-request">Submit a Request</a>
+    <h2>Can't find what you're looking for?</h2>
+    {{link 'new_request' class='submit-a-request'}} {{link 'new_post' class="submit-a-post"}}
   </div>
-  <div class="footer">
+  <div class="footer-bottom">
     <div class="footer-inner">
       <div class="footer-language-selector">
         {{#if alternative_locales}}

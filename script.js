@@ -1,55 +1,38 @@
 var HC = {};
-HC.templates = {};
 
 HC.SETTINGS = {
+
+  tutorialCategory: 115001339528,
+  icons: {
+    "201295803": document.head.querySelector("[property=asseturlrocket]").content, // Getting Started
+    "201295783": document.head.querySelector("[property=asseturltools]").content, // Knowledge Base
+    "community": document.head.querySelector("[property=asseturlchat]").content, // Community
+    "201295763": document.head.querySelector("[property=asseturlrocket]").content, // Getting Started
+  },
 }
 
 Vue.options.delimiters = ['{[{', '}]}'];
 
-
-/*=========================================================
- * HOME TEMPLATE
- *========================================================= */
-
-HC.templates.home = new Vue({
-
-  data: {
-    currentTab: null
-  },
-
-  mounted: function() {
-    // Set first category or section as current tab by default
-    var firstTab = $(".nav-list").children(".nav-item").first();
-    this.currentTab = $(firstTab).data("id");
-
-    // Display nav content
-    $(".nav-content-inner").removeClass('hide');
-  },
-
-  methods: {
-    /**
-     * Return true if given id matches current tab ID
-     * @param  {integer}  id category or section ID
-     * @return {Boolean}
-     */
-    isActive: function(id) {
-      return id === this.currentTab;
-    },
-
-    /**
-     * Sets current tab to given ID
-     * @param {integer} id category or section
-     */
-    setTab: function(id) {
-      this.currentTab = id;
+// Icon image component
+Vue.component('icon', {
+  template: '<img :src="iconUrl" class="icon" />',
+  props: ['id'],
+  computed: {
+    iconUrl: function() {
+      return HC.SETTINGS.icons[this.id];
     }
   }
 });
 
 
+HC.Utils = {
+  getPageId: function(url) {
+    var links = url.split("/"),
+      result = links[links.length - 1];
 
-
-
+    return parseInt(result, 10) || null;
+  },
+}
 
 
 /*
@@ -57,6 +40,15 @@ HC.templates.home = new Vue({
  */
 
 $(document).ready(function() {
+
+  // Redirect Getting Started category to first article in category
+  var $category = $(".knowledge-base .blocks-item[data-category='" + HC.SETTINGS.tutorialCategory + "']"),
+    $firstArticle = $category.find(".article-link").first();
+
+  if ($firstArticle) $category.find(".blocks-item-link").attr("href", $firstArticle.attr("href"));
+
+
+  $(".breadcrumbs").addClass("in");
 
   // social share popups
   $(".share a").click(function(e) {
